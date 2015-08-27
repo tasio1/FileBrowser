@@ -1,0 +1,46 @@
+body {
+    padding-top: 50px;
+}
+
+.starter-template {
+    margin: 20px 0;
+    text-align: center;
+}
+
+a {
+    cursor: pointer;
+}
+
+.back-link {
+    display: inline-block;
+    padding: 20px 0;
+}
+
+th.sort-block {
+    cursor: pointer;
+    position: relative;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    -webkit-user-select: none;
+    user-select: none;
+}
+
+    th.sort-block.active-sort::after {
+        content: '';
+        position: absolute;
+        right: 10px;
+        top: 15px;
+        width: 0;
+        height: 0;
+        border-style: solid;
+    }
+
+    th.sort-block.active-sort.desc::after {
+        border-width: 0 4px 8px 4px;
+        border-color: transparent transparent #4a4a4a transparent;
+    }
+
+    th.sort-block.active-sort.asc::after {
+        border-width: 8px 4px 0 4px;
+        border-color: #4a4a4a transparent transparent transparent;
+    }

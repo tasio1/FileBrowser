@@ -1,0 +1,31 @@
+﻿<div>
+    <a ng-href="" ng-click="getFilesFromDirectory(backLink)" class="back-link">Back</a>
+    <table data-height="299" class="table table-hover table-bordered">
+        <thead>
+            <tr>
+                <th ng-click="sortByType('name')" class="sort-block" ng-class="{'active-sort asc':sortType == 'name', 'active-sort desc':sortType == '-name'}">Name</th>
+                <th>Size</th>
+                <th ng-click="sortByType('date')" class="sort-block" ng-class="{'active-sort asc':sortType == 'date', 'active-sort desc':sortType == '-date'}">Date added</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="f in files">
+                <td>
+                    <a ng-href="" ng-click="getFilesFromDirectory(f.name)" ng-show="f.directory">/{{f.clearName}}</a>
+                    <a ng-href="" ng-click="goToPreviewPage(f.name)" ng-hide="f.directory">{{f.clearName}}</a>
+                </td>
+                <td>
+                    <span ng-show="f.directory">DIR</span>
+                    <span ng-hide="f.directory">{{f.size}}</span>
+                </td>
+                <td>
+                    <span class="text-muted">{{f.date | date :'medium'}}</span>
+                </td>
+                <td>
+                    <a href="" ng-click="openPromptWindow(f)">Rename</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
