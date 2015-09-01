@@ -37,33 +37,37 @@
 
     <script src="app/directives/filePreviewDirective.js"></script>
 
+    <script src="app/filters/fileSizeFilter.js"></script>
+
     <script type="text/ng-template" id="app/views/filesTableView.html">
         <div>
-            <a ng-href="" ng-click="getFilesFromDirectory(backLink)" class="back-link">Back</a>
+            <div class="back-link">
+                <a ng-href="" ng-click="changeDirectory(backLink)" ng-hide="pathURI === '/'">Back</a>
+            </div>
             <table data-height="299" class="table table-hover table-bordered">
                 <thead>
                     <tr>
-                        <th ng-click="sortByType('name')" class="sort-block" ng-class="{'active-sort asc':sortType == 'name', 'active-sort desc':sortType == '-name'}">Name</th>
+                        <th ng-click="toggleSort((sortType === 'name') ? '-name' : 'name')" class="sort-block" ng-class="{'active-sort asc':sortType == 'name', 'active-sort desc':sortType == '-name'}">Name</th>
                         <th>Size</th>
-                        <th ng-click="sortByType('date')" class="sort-block" ng-class="{'active-sort asc':sortType == 'date', 'active-sort desc':sortType == '-date'}">Date added</th>
+                        <th ng-click="toggleSort((sortType === 'dateDigitsSum') ? '-dateDigitsSum' : 'dateDigitsSum')" class="sort-block" ng-class="{'active-sort asc':sortType == 'dateDigitsSum', 'active-sort desc':sortType == '-dateDigitsSum'}">Date added</th>
                         <th>Action</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr ng-repeat="f in files">
                         <td>
-                            <a ng-href="" ng-click="getFilesFromDirectory(f.name)" ng-show="f.directory">/{{f.clearName}}</a>
+                            <a ng-href="" ng-click="changeDirectory(f.name)" ng-show="f.directory">/{{f.clearName}}</a>
                             <a ng-href="" ng-click="goToPreviewPage(f.name)" ng-hide="f.directory">{{f.clearName}}</a>
                         </td>
                         <td>
                             <span ng-show="f.directory">DIR</span>
-                            <span ng-hide="f.directory">{{f.size}}</span>
+                            <span ng-hide="f.directory">{{f.size | toMB}}</span>
                         </td>
                         <td>
                             <span class="text-muted">{{f.date | date :'medium'}}</span>
                         </td>
                         <td>
-                            <a href="" ng-click="openPromptWindow(f)">Rename</a>
+                            <a href="" ng-click="rename(f)">Rename</a>
                         </td>
                     </tr>
                 </tbody>
@@ -72,28 +76,28 @@
     </script>
 
     <script type="text/ng-template" id="app/views/filePreviewView.html">
-        <preview file="file"></preview>
-    </script>
-
-      <script type="text/ng-template" id="app/views/templates/previewTemplate.html">
         <a ng-href="#/home?path={{backLink}}" class="back-link">Back</a>
         <div class="row">
-            <div class="col-lg-6 text-right">
-                <img ng-src="https://unsplash.it/400/400/" ng-show="file.type !== 'txt'" />
-                <div class="text-justify" ng-show="file.type === 'txt'">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</div>
-            </div>
+            <preview file="file"></preview>
             <div class="col-lg-6">
                 <div class="list-group">
                     <div class="list-group-item">Name: {{file.clearName}}</div>
                     <div class="list-group-item">Type: {{file.type}}</div>
                     <div class="list-group-item">Parent directory: {{file.parentDirectory}}</div>
                     <div class="list-group-item">Date: {{file.date | date :'medium'}}</div>
-                    <div class="list-group-item">Size: {{file.size}}</div>
+                    <div class="list-group-item">Size: {{file.size | toMB}}</div>
                 </div>
-                <a ng-href="" class="btn btn-default" ng-click="openPromptWindow(file)">Rename</a>
+                <a ng-href="" class="btn btn-default" ng-click="rename(file)">Rename</a>
             </div>
-
         </div>
     </script>
+
+    <script type="text/ng-template" id="app/views/templates/previewTemplate.html">
+        <div class="col-lg-6 text-right">
+            <img ng-src="https://unsplash.it/400/400/" ng-show="file.type !== 'txt'" />
+            <div class="text-justify" ng-show="file.type === 'txt'">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</div>
+        </div>
+    </script>
+
 </body>
 </html>

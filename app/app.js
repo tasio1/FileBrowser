@@ -10,7 +10,8 @@ angular.module('app', ['httpAPIMock', 'ui.router'])
     })
     .state("preview", {
         url: "/preview?path",
-        templateUrl: "app/views/filePreviewView.html"
+        templateUrl: "app/views/filePreviewView.html",
+        controller: "FilePreviewController"
     });
 
     $urlRouterProvider.otherwise('/home');

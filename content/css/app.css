@@ -13,7 +13,10 @@ a {
 
 .back-link {
     display: inline-block;
-    padding: 20px 0;
+    vertical-align:top;
+    height:40px;
+    line-height:40px;
+    padding:0 0;
 }
 
 th.sort-block {

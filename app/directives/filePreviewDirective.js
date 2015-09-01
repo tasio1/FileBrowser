@@ -5,7 +5,6 @@ angular.module('app').directive('preview', [function () {
         scope: {
             file:'=file'
         },
-        controller: 'FilePreviewController',
         templateUrl: 'app/views/templates/previewTemplate.html',
         link: function (scope, elem, attr) {
 
